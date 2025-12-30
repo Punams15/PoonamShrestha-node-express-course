@@ -1,5 +1,59 @@
 //console.log('Task Manager App')
 
+
+//Modular & Clean updated app.js code
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const connectDB = require('./db/connect');
+const tasks = require('./routes/tasks');
+const notFound = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/error-handler');
+
+app.use(express.json());
+
+// Routes
+app.use('/api/v1/tasks', tasks);
+
+// 404 & Error Handling
+app.use(notFound);
+app.use(errorHandlerMiddleware);
+
+const port = process.env.PORT || 3000;
+
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI);
+    console.log('Connected to MongoDB');
+    app.listen(port, () => console.log(`Server listening on port ${port}...`));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
+
+/* updated code has Clean and organized (separate files for routes, controllers, models, middleware).
+
+Centralized error handling (error-handler.js) + 404 handling (not-found.js).
+
+Easier to maintain, especially for bigger projects.
+
+Follows the structure shown in your assignment.*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 //Ensure the environment is ready
 // 1. Add dotenv and mongoose at the top
 require('dotenv').config();
@@ -88,4 +142,4 @@ app.delete('/tasks/:id', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-});
+}); */
