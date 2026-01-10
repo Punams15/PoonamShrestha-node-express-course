@@ -1,4 +1,4 @@
-const Task = require('../models/Task')
+const Task = require('../models/task')
 const asyncWrapper = require('../middleware/async')
 const { StatusCodes } = require('http-status-codes')
 const { createCustomError } = require('../errors/custom-error')
